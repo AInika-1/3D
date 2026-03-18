@@ -86,6 +86,16 @@
         button:hover {
             background-color: #48D1CC;
         }
+        #form-status {
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+        #form-status.success {
+            color: #0a7a2f;
+        }
+        #form-status.error {
+            color: #b22222;
+        }
         .lang-ka {
             display: none;
         }
@@ -116,7 +126,7 @@
         <p class="lang-ka">დაგვიკავშირდით ჩვენი 3D მოდელირებისა და რევერს ინჟინერიის სერვისების შესახებ შეკითხვებისთვის.</p>
         <p class="lang-en"><strong>Phone:</strong> +995 123 456 789</p>
         <p class="lang-ka"><strong>ტელეფონი:</strong> +995 123 456 789</p>
-        <form action="#" method="post">
+        <form id="contact-form">
             <label for="name"><span class="lang-en">Name</span><span class="lang-ka">სახელი</span>:</label>
             <input type="text" id="name" name="name" required>
 
@@ -124,20 +134,25 @@
             <input type="email" id="email" name="email" required>
 
             <label for="phone"><span class="lang-en">Phone</span><span class="lang-ka">ტელეფონი</span>:</label>
-            <input type="tel" id="phone" name="phone">
+            <input type="number" id="phone" name="phone" required>
 
             <label for="message"><span class="lang-en">Message</span><span class="lang-ka">შეტყობინება</span>:</label>
             <textarea id="message" name="message" rows="5" required></textarea>
 
             <button type="submit"><span class="lang-en">Send Message</span><span class="lang-ka">გაგზავნა</span></button>
         </form>
+        <p id="form-status" role="status" aria-live="polite"></p>
     </main>
     <footer>
         <p><span class="lang-en">&copy; 2026 3D Modeling Services</span><span class="lang-ka">&copy; 2026 3D მოდელირების სერვისები</span></p>
     </footer>
     <script>
         const toggle = document.getElementById('lang-toggle');
+        const contactForm = document.getElementById('contact-form');
+        const formStatus = document.getElementById('form-status');
         const STORAGE_KEY = 'siteLang';
+        // Replace YOUR-N8N-DOMAIN with your real n8n domain.
+        const WEBHOOK_URL = 'https://YOUR-N8N-DOMAIN/webhook/f2421310-0ed0-46fc-bbd2-819139c7837a';
 
         function setLanguage(lang) {
             const isGeorgian = lang === 'ka';
@@ -157,6 +172,41 @@
         toggle.addEventListener('click', () => {
             const newLang = localStorage.getItem(STORAGE_KEY) === 'ka' ? 'en' : 'ka';
             setLanguage(newLang);
+        });
+
+        contactForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const payload = {
+                name: document.getElementById('name').value.trim(),
+                Email: document.getElementById('email').value.trim(),
+                Phone: document.getElementById('phone').value.trim(),
+                Message: document.getElementById('message').value.trim()
+            };
+
+            formStatus.className = '';
+            formStatus.textContent = 'Sending...';
+
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Webhook request failed');
+                }
+
+                contactForm.reset();
+                formStatus.className = 'success';
+                formStatus.textContent = 'Message sent successfully.';
+            } catch (error) {
+                formStatus.className = 'error';
+                formStatus.textContent = 'Could not send message. Please try again.';
+            }
         });
     </script>
 </body>
