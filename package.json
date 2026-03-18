@@ -1,0 +1,16 @@
+{
+  "name": "3d",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static 3D website deployed on Railway",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
