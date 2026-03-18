@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Our Services</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #AFEEEE;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background-color: #00CED1;
+            color: white;
+            padding: 1rem;
+        }
+        nav {
+            background-color: #48D1CC;
+            padding: 0.5rem;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav li {
+            margin: 0 1rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+        main {
+            padding: 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        form {
+            background: white;
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        #lang-toggle {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            margin: 0;
+            padding: 5px 10px;
+            background-color: #48D1CC;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #lang-toggle:hover {
+            background-color: #AFEEEE;
+        }
+        button {
+            background-color: #00CED1;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #48D1CC;
+        }
+        .lang-ka {
+            display: none;
+        }
+        footer {
+            background-color: #00CED1;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><span class="lang-en">3D Modeling & Reverse Engineering Services</span><span class="lang-ka">3D მოდელირება და რევერს ინჟინერია სერვისები</span></h1>
+        <button id="lang-toggle">ქართული</button>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html"><span class="lang-en">Home</span><span class="lang-ka">მთავარი</span></a></li>
+            <li><a href="3d-model.html"><span class="lang-en">3D Model</span><span class="lang-ka">3D მოდელი</span></a></li>
+            <li><a href="reverse-engineering.html"><span class="lang-en">Reverse Engineering</span><span class="lang-ka">რევერს ინჟინერია</span></a></li>
+            <li><a href="contact.html"><span class="lang-en">Contact</span><span class="lang-ka">კონტაქტი</span></a></li>
+        </ul>
+    </nav>
+    <main>
+        <h2><span class="lang-en">Contact Us</span><span class="lang-ka">დაგვიკავშირდით</span></h2>
+        <p class="lang-en">Get in touch with us for inquiries about our 3D modeling and reverse engineering services.</p>
+        <p class="lang-ka">დაგვიკავშირდით ჩვენი 3D მოდელირებისა და რევერს ინჟინერიის სერვისების შესახებ შეკითხვებისთვის.</p>
+        <p class="lang-en"><strong>Phone:</strong> +995 123 456 789</p>
+        <p class="lang-ka"><strong>ტელეფონი:</strong> +995 123 456 789</p>
+        <form action="#" method="post">
+            <label for="name"><span class="lang-en">Name</span><span class="lang-ka">სახელი</span>:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email"><span class="lang-en">Email</span><span class="lang-ka">ელ.ფოსტა</span>:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone"><span class="lang-en">Phone</span><span class="lang-ka">ტელეფონი</span>:</label>
+            <input type="tel" id="phone" name="phone">
+
+            <label for="message"><span class="lang-en">Message</span><span class="lang-ka">შეტყობინება</span>:</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+
+            <button type="submit"><span class="lang-en">Send Message</span><span class="lang-ka">გაგზავნა</span></button>
+        </form>
+    </main>
+    <footer>
+        <p><span class="lang-en">&copy; 2026 3D Modeling Services</span><span class="lang-ka">&copy; 2026 3D მოდელირების სერვისები</span></p>
+    </footer>
+    <script>
+        const toggle = document.getElementById('lang-toggle');
+        const STORAGE_KEY = 'siteLang';
+
+        function setLanguage(lang) {
+            const isGeorgian = lang === 'ka';
+            document.querySelectorAll('.lang-ka').forEach(el => {
+                el.style.display = isGeorgian ? 'block' : 'none';
+            });
+            document.querySelectorAll('.lang-en').forEach(el => {
+                el.style.display = isGeorgian ? 'none' : 'block';
+            });
+            toggle.textContent = isGeorgian ? 'English' : 'ქართულად';
+            localStorage.setItem(STORAGE_KEY, lang);
+        }
+
+        const savedLang = localStorage.getItem(STORAGE_KEY) || 'en';
+        setLanguage(savedLang);
+
+        toggle.addEventListener('click', () => {
+            const newLang = localStorage.getItem(STORAGE_KEY) === 'ka' ? 'en' : 'ka';
+            setLanguage(newLang);
+        });
+    </script>
+</body>
+</html>
